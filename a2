@@ -1,0 +1,323 @@
+```
+
+```
+
+##Android SDK介绍
+###SDK接入流程
+###1.工程依赖配置
+2.SDK API使用
+一.模块初始化
+二.设备搜索
+三.停止搜索
+四.监听设备搜索结果
+五.监听设备管理器状态变化
+六.监听蓝牙管理后台的错误信息
+七.监听设备数据变化
+八.主动调用数据同步
+九.主动调用设备重连
+十.设备解绑
+SDK API的Object-C版本
+SDK API的Swift版本
+
+##Android SDK介绍
+#####该SDK主要提供蓝牙设备设备管理/搜素/连接/重连/数据拉取同步, 实时测量数据同步等，本SDK不会本地保存任何用户数据。
+
+#####实时数据自动同步步数/距离/卡路里 心率/血氧/温度等, 运动数据支持 篮球/羽毛球/足球/徒步/登山/骑行/跑步/跑步机等多种运动模式。
+
+##SDK接入流程
+
+###一，工程依赖配置
+
+**1，将SDK放置在工程libs目录下**
+
+在SDK开发包中找到**sgz_sdk_v1.1.aar**文件，复制放入libs目录下，如下图所示
+
+![image.png](./assets/image.png)
+
+2，在app模式的build.gradle文件中引入aar文件
+
+①android{}中加入如下代码
+
+```
+   repositories {
+        flatDir{
+            dirs 'libs'
+        }
+    }
+````
+
+②dependencies{}中引入SDK
+
+```
+   //引入SDK
+    implementation(name: 'sgz_sdk_v1.1', ext: 'aar')
+```
+
+以上操作完成后点击 sync now 同步配置，至此SDK已经引入工程中
+
+###2，添加相关配置权限
+
+①在AndroidManifest.xml中添加蓝牙和位置相关权限
+
+`
+
+```
+<!--位置权限-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <!--Android 12需添加BLUETOOTH_CONNECT权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-feature android:name="android.hardware.bluetooth_le"/>
+    <uses-feature android:name="android.hardware.bluetooth"/>
+````
+
+②判断手机蓝牙是否打开，未打开可手动或调动代码打开蓝牙
+
+`
+
+```
+ /**
+     *  判断蓝牙是否打开
+     */
+    private BluetoothManager bluetoothManager;
+    private BluetoothAdapter bluetoothAdapter;
+    private boolean isOpenBluetooth(){
+        bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        if (bluetoothManager == null){
+            return false;
+        }
+  
+        bluetoothAdapter = bluetoothManager.getAdapter();
+        if (bluetoothAdapter == null){
+            return false;
+        }
+   
+        return bluetoothAdapter.isEnabled();
+   
+    }
+````
+
+```
+/**
+     * 打开蓝牙
+     */
+    private void openBletooth() {
+        try {
+            // 请求打开 Bluetooth
+            Intent requestBluetoothOn = new Intent(
+                    BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            // 设置 Bluetooth 设备可以被其它 Bluetooth 设备扫描到
+            requestBluetoothOn
+                    .setAction(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            // 设置 Bluetooth 设备可见时间
+            requestBluetoothOn.putExtra(
+                    BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,
+                    30 * 1000);
+            // 请求开启 Bluetooth
+            startActivityForResult(requestBluetoothOn, 1001);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+```
+
+③Android6.0以上动态申请位置权限
+
+`
+
+```
+/**
+     * 判断位置权限是否打开，未打开请求位置权限
+     */
+    private void requestLocationPermission(){
+        boolean isPermission = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if(!isPermission){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0x00);
+        }
+    }
+
+    /**
+     * 请求位置权限的回调
+     * @param requestCode  requestCode
+     * @param permissions 权限
+     * @param grantResults 是否成功
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+  
+    }
+````
+
+④部分型号手机需要打开手机的位置开关(GPS)，如果搜索不到设备，请手动打开位置开关
+
+##2，SDK API使用
+
+一，模块初始化
+
+①创建Application应用类并继承BleApplication
+
+`
+
+```
+/**
+ * Application
+ *
+ * @author Admin
+ */
+public class BaseApplication extends BleApplication {
+
+
+    private static BaseApplication baseApplication;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        baseApplication = this;
+    }
+
+
+    public static BaseApplication getBaseApplication() {
+        return baseApplication;
+    }
+
+    /**
+     * 获取蓝牙数据操作类
+     **/
+    public BleOperateManager getBleOperate() {
+        return BleOperateManager.getInstance();
+    }
+}
+````
+
+②在AndroidManifest.xml文件中application中引入创建的Application，如下所示：
+
+`
+
+```
+<application
+        android:name="com.sgzapp.sgzsdkdemo.BaseApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SgzSDKDemo"
+        tools:targetApi="31">
+````
+
+设备管理器模块为 ***BleOperateManager*** 类型为 ***Singleton*** , 实例化调用为 **BleOperateManager.getInstance()**，可以全局使用
+
+已处理为全局单例模式，建议使用方式为：**BaseApplication.getBaseApplication().getBleOperate()**，所有的蓝牙相关操作均通过此单例类操作
+
+二，搜索设备
+调用以下方法进行搜索设备：
+
+`
+
+```
+BaseApplication.getBaseApplication().getBleOperate().scanBleDevice(SearchResponse searchResponse, int duration, int times)
+````
+
+示例如下：
+
+`
+
+```
+    BaseApplication.getBaseApplication().getBleOperate().scanBleDevice(new SearchResponse() {
+
+            /**
+             * 搜索开始
+             * search started
+             */
+            @Override
+            public void onSearchStarted() {
+
+            }
+
+            /**
+             * 搜索发现设备
+             * device founded
+             * 
+             * @param searchResult class
+             * public BluetoothDevice device;
+             *     public int rssi;
+             *     public byte[] scanRecord;
+             */
+            @Override
+            public void onDeviceFounded(SearchResult searchResult) {
+
+            }
+
+            /**
+             * 搜索停止
+             * search stopped
+             */
+            @Override
+            public void onSearchStopped() {
+
+            }
+
+            /**
+             * 搜索关闭
+             * search  canceled
+             */
+            @Override
+            public void onSearchCanceled() {
+
+            }
+            //duration 搜索时间 search time ;times 搜索次数 search times
+        },15 * 1000,1);
+````
+
+二，停止搜索
+
+调用以下方法进行停止搜索：
+
+`
+
+```
+ BaseApplication.getBaseApplication().getBleOperate().stopScanDevice();
+````
+
+
+三，连接设备
+
+调用以下方法进行设备连接：
+
+`
+
+```
+BaseApplication.getBaseApplication().getBleOperate().connYakDevice(String bleName, String bleMac, ConnStatusListener connStatusListener)
+````
+
+示例如下：
+
+`
+
+```
+    BaseApplication.getBaseApplication().getBleOperate().connYakDevice(bleName, bleMac, new ConnStatusListener() {
+            @Override
+            public void connStatus(int i) {
+
+            }
+
+            /**
+             * connection success
+             *
+             */
+            @Override
+            public void setNoticeStatus(int i) {
+                dismissDialog();
+                BleSpUtils.put(ScanDeviceActivity.this,"conn_ble_mac",bleMac);
+                finish();
+            }
+        });
+````

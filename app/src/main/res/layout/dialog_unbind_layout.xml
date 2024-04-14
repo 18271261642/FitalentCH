@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape_radius="@dimen/dp_10"
+    app:shape_solidColor="@color/white"
+    android:padding="@dimen/dp_10"
+    android:layout_margin="@dimen/dp_10"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_prompt"
+        android:textColor="#ff2f2f33"
+        android:textSize="18sp"
+        android:padding="@dimen/dp_5"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/string_sync_bind_desc"
+        android:textColor="#ff2f2f33"
+        android:textSize="16sp"
+        android:padding="@dimen/dp_5"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:orientation="horizontal">
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/syncUnBindTv"
+            android:layout_width="0dp"
+            app:shape_radius="@dimen/dp_10"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:padding="@dimen/dp_10"
+            android:layout_height="wrap_content"
+            app:shape_solidColor="#FF453A"
+            app:shape_solidPressedColor="#50FF453A"
+            android:textColor="@color/white"
+            android:text="@string/string_sync_bind"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/unbindTv"
+            android:layout_width="0dp"
+            app:shape_radius="@dimen/dp_10"
+            android:layout_weight="1"
+            android:padding="@dimen/dp_10"
+            android:layout_height="wrap_content"
+            app:shape_solidColor="#4DDA64"
+            android:textColor="@color/white"
+            app:shape_solidPressedColor="#504DDA64"
+            android:text="@string/string_unbind_txt"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/unbindCancelTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/string_cancel"
+        app:shape_solidColor="#F7F7F9"
+        app:shape_solidPressedColor="#50F7F7F9"
+        android:textColor="#2F2F33"
+        android:layout_gravity="center"
+        app:shape_radius="@dimen/dp_10"
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_10"
+        android:textSize="@dimen/sp_18"
+        android:padding="@dimen/dp_10"/>
+
+</com.hjq.shape.layout.ShapeLinearLayout>

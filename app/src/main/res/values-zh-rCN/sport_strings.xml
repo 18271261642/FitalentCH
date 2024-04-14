@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="string_type_outdoor">户外跑</string>
+    <string name="string_type_indoor">室内跑</string>
+    <string name="string_type_cycling">骑行</string>
+    <string name="string_type_run">行走</string>
+
+    <string name="string_sport_locking">锁定中</string>
+    <string name="string_sport_total_distance">总里程</string>
+    <string name="string_sport_total_time">总时长</string>
+    <string name="string_sport_total_kcal">总消耗</string>
+    <string name="string_sport_total_data">%1s累计数据</string>
+    <string name="string_sport_last_data">%1s最近一次数据</string>
+    <string name="string_sport_pause">暂停</string>
+    <string name="string_sport_contimue">继续</string>
+    <string name="string_sport_over">结束</string>
+    <string name="string_sport_long_press_end">长按结束</string>
+    <string name="string_sport_long_unlock">长按解锁</string>
+    <string name="string_sport_track">运动轨迹</string>
+    <string name="string_sport_pace">配速</string>
+    <string name="string_sport_use_time">用时</string>
+    <string name="string_sport_dis">距离</string>
+    <string name="string_sport_avg_pace">平均配速</string>
+    <string name="string_sport_total_consume">消耗热烈</string>
+    <string name="string_sport_avg_hr">平均心率</string>
+    <string name="string_sport_look_detail_data">查看详细数据</string>
+    <string name="string_sport_setting">运动设置</string>
+    <string name="string_sport_voice_play">语音播报</string>
+    <string name="string_sport_keep_screen_on">屏幕常亮</string>
+    <string name="string_sport_pace_notification">配速提醒</string>
+    <string name="string_sport_pace_desc">低于设定值提醒</string>
+    <string name="string_sport_hr_notification">心率预警</string>
+    <string name="string_sport_hr_desc">高于设定值提醒\n跑步心率参考范围:136~159</string>
+    
+    
+</resources>

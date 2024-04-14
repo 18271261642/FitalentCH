@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent">
+
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/sportHomePreviewMapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_sport_home_indoor_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/indoorImg"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_40"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/sportHomeSettImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dp_10"
+                android:src="@mipmap/ic_sport_home_setting_img" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:src="@mipmap/ic_sport_home_record_img" />
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sportHomeTypeRy"
+            tools:itemCount="4"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_15"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_sport_type_select_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <com.bonlala.sport.view.SportHomeTypeDataView
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/dp_5"
+            android:id="@+id/sportHomeTotalView"
+            android:layout_height="wrap_content"/>
+
+
+
+
+        <com.bonlala.sport.view.SportRealHrAndGpsView
+            android:id="@+id/sportRealView"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+
+
+    <FrameLayout
+        android:id="@+id/homeSportStartLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_height="wrap_content">
+        
+        
+        <com.hjq.shape.view.ShapeView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:shape_radius="60dp"
+            app:shape_solidPressedColor="@color/wx_gray"
+            app:shape_solidColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始"
+            android:gravity="center"
+            android:textColor="#2f2f33"
+            android:textSize="22sp"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+        
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

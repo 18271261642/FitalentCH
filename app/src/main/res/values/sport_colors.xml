@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="sport_type_normal_color">#D6D6DD</color>
+    <color name="sport_type_checked_color">#2F2F33</color>
+
+</resources>

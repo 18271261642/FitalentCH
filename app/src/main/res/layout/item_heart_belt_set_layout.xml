@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/hrBeltMenuLayout"
+    android:paddingBottom="@dimen/dp_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/string_hr_zone"
+        android:textColor="#ff141418"
+        android:textSize="28sp"
+        android:padding="@dimen/dp_5"/>
+
+    <com.bonlala.fitalent.view.HeartRangeView
+        android:id="@+id/rangView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:id="@+id/deviceOtaLayout"
+        android:layout_width="match_parent"
+        app:shape_solidColor="@color/white"
+        app:shape_radius="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_5"
+        app:shape_solidPressedColor="@color/common_bg_color"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_firmware"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/common_text_color"
+            android:padding="@dimen/dp_10"/>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/deviceOtaVersionTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_5"
+            android:text="v1.0.4"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_gray_right_back"/>
+
+
+    </com.hjq.shape.layout.ShapeLinearLayout>
+    <com.bonlala.widget.layout.SettingBar
+        android:id="@+id/hrBeltMenuFirmwareBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/string_firmware"
+        android:visibility="gone"
+        app:bar_leftTextSize="18sp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:bar_lineVisible="false"
+        app:bar_rightDrawable="@drawable/ic_gray_right_back"
+        app:bar_rightText="" />
+
+</LinearLayout>

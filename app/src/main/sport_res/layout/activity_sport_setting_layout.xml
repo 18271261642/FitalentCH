@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@mipmap/ic_sporting_left_img"
+        app:titleColor="#2F2F33"
+        app:lineVisible="false"
+        app:title="@string/string_sport_setting"
+        android:background="@color/white"/>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/sportSetTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@color/white"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0dp"
+        app:tabMinWidth="0dp"
+        app:tabIndicatorColor="#21D76E"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="fixed">
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/sportSetViewPager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>
